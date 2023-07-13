@@ -1,24 +1,39 @@
 package com.lazboy.testing;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView textViewTest;
+    Button settingBtn;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewTest = (TextView) findViewById(R.id.textviewTest);
+        btnInit();
+    }
 
+    private void btnInit() {
+        textViewTest = (TextView) findViewById(R.id.textviewTest);
+        settingBtn = (Button) findViewById(R.id.button_settings);
+
+
+        settingBtn.setOnClickListener(this);
         textViewTest.setOnClickListener(this);
     }
 
@@ -30,10 +45,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+      setContentView(R.layout.activity_main);
+      btnInit();
+    }
+
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.textviewTest){
+        if (v.getId()== R.id.textviewTest){
             changeTextColor();
+
+        } else if (v.getId() == R.id.button_settings) {
+            toSettingsPage();
         }
+
+
+    }
+
+    private void toSettingsPage() {
+        try {
+
+        setContentView(R.layout.fragment_settings);
+
+        }catch (Exception e){
+            Log.d("fragment",e.getMessage());
+        }
+
+
     }
 }
